@@ -34,7 +34,7 @@ try {
   <p>Some description here!</p>
 </div>
 
-<div class="container">
+<div class="col-md-12">
   <div class="card">
     <div class="card-body">
       <div class="col">
@@ -114,6 +114,47 @@ try {
  
         </p>
 
+        <div class="divider bg-dark"><hr></div>
+        
+        <h5>このニュースの関連銘柄</h5>
+        
+        <div class="divider"><hr></div>
+        
+        <table class="table table-striped">
+            
+            <tbody>
+        
+            <?php
+            
+            $sth = $pdo->prepare("SELECT * FROM news_company_table WHERE news_id = ".$news_id);
+            $sth->execute();
+            
+            foreach($sth as $row){
+                $sth2 = $pdo->prepare("SELECT * FROM companies WHERE id = ".$row['company_id']);
+                $sth2->execute();
+                $row_company = $sth2->fetch();
+                $company_name = $row_company['name'];
+            ?>
+        
+            <tr>
+                <th scope="row"><?php echo $company_name ?></th>
+            </tr>
+            
+            <?php
+            }
+            ?>
+            </tbody>
+            
+        </table>
+        
+        
+        
+        <div class="divider bg-dark"><hr></div>
+        
+        <h5>関連ニュースから銘柄を探す</h5>
+        
+        <div class="divider"><hr></div>
+        
         <div class="divider bg-dark"><hr></div>
 
       </div>
